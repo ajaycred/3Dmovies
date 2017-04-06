@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <android.support.v7.widget.CardView
+        app:cardElevation="10dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:id="@+id/cardlay_moviepreview"
+        android:layout_width="@dimen/moviepreviewcardwidth"
+        android:layout_height="@dimen/moviepreviewcardhight" >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:id="@+id/relative_cardpreview"
+            android:background="@mipmap/deadpool"
+            android:layout_height="match_parent">
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+        <TextView
+            android:textColor="#000"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/cardlay_moviepreview"
+            android:id="@+id/moviepreviewcard_tvmovietitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dead Pool \t 2015" />
+
+        <TextView
+            android:id="@+id/moviepreviewcard_tvRating"
+            android:layout_below="@+id/moviepreviewcard_tvmovietitle"
+            android:textColor="#000"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="Rating : 6.5" />
+</RelativeLayout>
