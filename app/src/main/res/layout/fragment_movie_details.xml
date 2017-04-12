@@ -6,10 +6,6 @@
     tools:context="upgradekaro.a3dmovies.fragment.MovieDetails">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/tv_teest"
-        android:text="@string/hello_blank_fragment" />
+
 
 </FrameLayout>

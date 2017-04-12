@@ -70,7 +70,7 @@ Context context;
                 bundle.putString("id"," "+moviesModel.getId());
                 moviedetails.setArguments(bundle);
                 FragmentTransaction ft = ((FragmentActivity) context).getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.main_container,moviedetails);
+                ft.replace(R.id.activiy_main,moviedetails);
                 ft.addToBackStack(null);
                 ft.commit();
             }

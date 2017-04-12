@@ -7,15 +7,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import upgradekaro.a3dmovies.R;
-import upgradekaro.a3dmovies.RequestInterface;
-import upgradekaro.a3dmovies.model.DetailsModel;
 
 
 /**
@@ -23,9 +29,11 @@ import upgradekaro.a3dmovies.model.DetailsModel;
  */
 public class MovieDetails extends Fragment {
     private String movieid;
-    DetailsModel.Movie detailsModel;
     TextView tvtest;
-    private String moviedetailurl="https://yts.ag/api/v2/";
+    String url_background,url_icon;
+    ImageView ivbackground,ivicon;
+    private String moviedetailurl="https://yts.ag/api/v2/movie_details.json?movie_id=";
+    private RequestQueue requestQueue;
     public MovieDetails() {
         // Required empty public constructor
     }
@@ -38,33 +46,40 @@ public class MovieDetails extends Fragment {
         // Inflate the layout for this fragment
         Bundle linkarguments=getArguments();
         movieid=linkarguments.getString("id");
-        View v=inflater.inflate(R.layout.fragment_movie_details, container, false);
+        View v=inflater.inflate(R.layout.moviedetails, container, false);
+        requestQueue= Volley.newRequestQueue(getContext());
         tvtest= (TextView) v.findViewById(R.id.tv_teest);
-        detailsModel=new DetailsModel.Movie();
-        apiCall();
+        ivicon= (ImageView) v.findViewById(R.id.iv_icon);
+        ivbackground= (ImageView) v.findViewById(R.id.iv_background);
+        StringRequest request=new StringRequest(Request.Method.GET,moviedetailurl+movieid,onPostsLoaded,onPostsError);
+        requestQueue.add(request);
         Log.e("moviedetials",""+moviedetailurl.trim()+movieid);
         return v;
     }
-
-    private void apiCall() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(moviedetailurl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        RequestInterface client=retrofit.create(RequestInterface.class);
-        Call<DetailsModel> call=client.getMyJSON();
-        call.enqueue(new Callback<DetailsModel>() {
-            @Override
-            public void onResponse(Call<DetailsModel> call, retrofit2.Response<DetailsModel> response) {
-                DetailsModel det=response.body();
-                Log.e("checkdetailres"," tk "+response);
+    private final Response.ErrorListener onPostsError = new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            Log.e("PostActivity", error.toString());
+        }
+    };
+    private final Response.Listener<String> onPostsLoaded = new Response.Listener<String>() {
+        @Override
+        public void onResponse(String response) {
+            Log.e("responsemovie",""+response);
+            try {
+                JSONObject jsmdata=new JSONObject(response).getJSONObject("data").getJSONObject("movie");
+                String movietitle=jsmdata.getString("title");
+                url_background=jsmdata.getString("background_image");
+                url_icon=jsmdata.getString("medium_cover_image");
+                Log.e("checkresponse",movietitle+"\t"+url_icon+"\t"+url_background);
+                tvtest.setText(movietitle);
+              //  Picasso.with(getContext()).load(url_icon).into(ivicon);
+                Glide.with(getContext()).load(url_background).centerCrop().into(ivbackground);
+                Glide.with(getContext()).load(url_icon).centerCrop().crossFade().into(ivicon);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
 
-            @Override
-            public void onFailure(Call<DetailsModel> call, Throwable t) {
-                Log.e("logfail","nothing"+t);
-            }
-        });
-    }
-
+        }
+    };
 }
