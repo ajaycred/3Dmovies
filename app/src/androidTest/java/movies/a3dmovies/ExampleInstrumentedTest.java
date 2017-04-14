@@ -1,4 +1,4 @@
-package upgradekaro.a3dmovies;
+package movies.a3dmovies;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

@@ -1,4 +1,4 @@
-package upgradekaro.a3dmovies.model;
+package movies.a3dmovies.model;
 
 /**
  * Created by cred-user-6 on 7/4/17.

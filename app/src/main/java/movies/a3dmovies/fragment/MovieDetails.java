@@ -1,10 +1,11 @@
-package upgradekaro.a3dmovies.fragment;
+package movies.a3dmovies.fragment;
 
 
 import android.app.DownloadManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,15 +26,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import upgradekaro.a3dmovies.R;
+import movies.a3dmovies.R;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class MovieDetails extends Fragment implements View.OnClickListener {
-    private String movieid,movietitle,torrentsurl;
-    TextView tvtest;
+    private String movieid,movietitle,torrentsurl,runtime,downloadcount,likescount;
+    TextView tvtest,tvdownloadcount,tvruntime,tvlikecount;
     Button btn_downloadlink;
     String url_background,url_icon;
     ImageView ivbackground,ivicon;
@@ -52,13 +53,14 @@ public class MovieDetails extends Fragment implements View.OnClickListener {
         Bundle linkarguments=getArguments();
         movieid=linkarguments.getString("id");
         View v=inflater.inflate(R.layout.moviedetails, container, false);
-        initComponents(v);
         requestQueue= Volley.newRequestQueue(getContext());
         StringRequest request=new StringRequest(Request.Method.GET,moviedetailurl+movieid,onPostsLoaded,onPostsError);
+       // request.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(request);
+       // newRequestMethod();
+        initComponents(v);
         Log.e("moviedetials",""+moviedetailurl.trim()+movieid);
         clickFunctions();
-
         return v;
     }
 
@@ -71,12 +73,17 @@ public class MovieDetails extends Fragment implements View.OnClickListener {
         ivicon= (ImageView) v.findViewById(R.id.iv_icon);
         ivbackground= (ImageView) v.findViewById(R.id.iv_background);
         btn_downloadlink= (Button) v.findViewById(R.id.download_torrent);
+        tvdownloadcount= (TextView) v.findViewById(R.id.tv_detailsdownloadcount);
+        tvlikecount= (TextView) v.findViewById(R.id.tv_detailslikecount);
+        tvruntime= (TextView) v.findViewById(R.id.tv_detailsruntime);
     }
 
     private final Response.ErrorListener onPostsError = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
+            error.printStackTrace();
             Log.e("PostActivity", error.toString());
+            Log.e("errorcode", ""+error.networkResponse.statusCode);
         }
     };
     private final Response.Listener<String> onPostsLoaded = new Response.Listener<String>() {
@@ -88,6 +95,9 @@ public class MovieDetails extends Fragment implements View.OnClickListener {
                 movietitle=jsmdata.getString("title");
                 url_background=jsmdata.getString("background_image");
                 url_icon=jsmdata.getString("medium_cover_image");
+                downloadcount=jsmdata.getString("download_count");
+                likescount=jsmdata.getString("like_count");
+                runtime=jsmdata.getString("runtime");
                 gettingTorrents(jsmdata);
                 assignData();
                 Log.e("checkresponse",movietitle+"\t"+url_icon+"\t"+url_background);
@@ -100,6 +110,9 @@ public class MovieDetails extends Fragment implements View.OnClickListener {
 
     private void assignData(){
         tvtest.setText(movietitle);
+        tvlikecount.setText(likescount+"\t likes");
+        tvruntime.setText(runtime+"mns");
+        tvdownloadcount.setText(downloadcount+"\t downloads");
         Glide.with(getContext()).load(url_background).centerCrop().into(ivbackground);
         Glide.with(getContext()).load(url_icon).centerCrop().crossFade().into(ivicon);
     }
@@ -115,6 +128,9 @@ public class MovieDetails extends Fragment implements View.OnClickListener {
         }
     }
 
+
+
+
     private void downloadFile(String url){
         Uri downloadlink= Uri.parse(url);
         downloadmgr= (DownloadManager) getContext().getSystemService(getContext().DOWNLOAD_SERVICE);
@@ -127,8 +143,30 @@ public class MovieDetails extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(v==btn_downloadlink){
+            torrent torr=new torrent();
+            FragmentTransaction ft=getFragmentManager().beginTransaction();
+            ft.replace(R.id.activiy_main,torr);
+            ft.addToBackStack(null);
+            ft.commit();
             downloadFile(torrentsurl);
             Log.d("loging","downloading");
         }
     }
+    private void newRequestMethod(){
+        RequestQueue queue=Volley.newRequestQueue(getContext());
+        StringRequest request=new StringRequest(Request.Method.GET,moviedetailurl+movieid,new Response.Listener<String>(){
+            @Override
+            public void onResponse(String response){
+                Log.e("response",""+response);
+            }
+        },
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error){
+                        Log.d("errorcode",""+error);
+                    }
+                });
+        queue.add(request);
+    }
 }
+

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:background="#ffffff"
+    android:clickable="true"
     android:layout_height="match_parent">
 
     <ImageView
@@ -30,7 +31,7 @@
         android:layout_below="@+id/tv_teest"
         app:cardCornerRadius="4dp"
         android:id="@+id/card_icon"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true"
         android:layout_height="250dp">
         <ImageView
@@ -41,8 +42,76 @@
     <include layout="@layout/toolbardetails"></include>
 
     <Button
+        android:layout_below="@id/card_icon"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
         android:id="@+id/download_torrent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="download" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_below="@+id/download_torrent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:id="@+id/details_relruntime"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_detailsruntime"
+            android:layout_alignParentLeft="true"
+            android:drawableTop="@drawable/clock"
+            android:layout_width="wrap_content"
+            android:textColor="@color/white"
+            android:layout_marginLeft="30dp"
+            android:layout_height="wrap_content"
+            android:text="1h 32m" />
+
+        <TextView
+            android:id="@+id/tv_detailsdownloadcount"
+            android:layout_width="wrap_content"
+            android:textColor="@color/white"
+            android:drawableTop="@drawable/download"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:text="23015 download" />
+
+        <TextView
+            android:id="@+id/tv_detailslikecount"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="30dp"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:drawableTop="@drawable/thumb_up"
+            android:layout_height="wrap_content"
+            android:text="1523 likes" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </RelativeLayout>
+
+    <RatingBar
+        android:id="@+id/details_rbmovierating"
+        android:rating="4"
+        android:numStars="5"
+        android:tint="#ffeb90"
+        android:background="#09cacaca"
+        android:layout_below="@+id/details_relruntime"
+        android:layout_alignParentRight="true"
+        style="@style/Base.Widget.AppCompat.RatingBar.Indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:textColor="#fff"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:layout_marginRight="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/details_rbmovierating"
+        android:text="Rating  9.5"
+        android:layout_height="wrap_content" />
 </RelativeLayout>

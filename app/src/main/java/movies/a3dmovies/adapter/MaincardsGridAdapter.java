@@ -1,4 +1,4 @@
-package upgradekaro.a3dmovies.adapter;
+package movies.a3dmovies.adapter;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -15,9 +15,9 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-import upgradekaro.a3dmovies.fragment.MovieDetails;
-import upgradekaro.a3dmovies.model.MoviesModel;
-import upgradekaro.a3dmovies.R;
+import movies.a3dmovies.fragment.MovieDetails;
+import movies.a3dmovies.model.MoviesModel;
+import movies.a3dmovies.R;
 
 /**
  * Created by cred-user-6 on 6/4/17.

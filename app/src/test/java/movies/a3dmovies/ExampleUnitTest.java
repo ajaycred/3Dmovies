@@ -1,4 +1,4 @@
-package upgradekaro.a3dmovies;
+package movies.a3dmovies;
 
 import org.junit.Test;
 

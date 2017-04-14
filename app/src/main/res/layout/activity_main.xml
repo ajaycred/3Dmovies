@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:id="@+id/activiy_main"
     android:layout_height="match_parent"
-    tools:context="upgradekaro.a3dmovies.activity.Main_activity">
+    tools:context="movies.a3dmovies.activity.Main_activity">
     <include layout="@layout/toolbar"  android:id="@+id/maintoolbar"></include>
     <RelativeLayout
         android:layout_width="match_parent"
