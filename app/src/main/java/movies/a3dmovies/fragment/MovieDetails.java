@@ -4,6 +4,7 @@ package movies.a3dmovies.fragment;
 import android.app.DownloadManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -26,7 +27,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+
 import movies.a3dmovies.R;
+import movies.a3dmovies.Utils;
 
 
 /**
@@ -36,10 +40,12 @@ public class MovieDetails extends Fragment implements View.OnClickListener {
     private String movieid,movietitle,torrentsurl,runtime,downloadcount,likescount;
     TextView tvtest,tvdownloadcount,tvruntime,tvlikecount;
     Button btn_downloadlink;
+    Utils utils;
     String url_background,url_icon;
     ImageView ivbackground,ivicon;
     DownloadManager downloadmgr;
-    private String moviedetailurl="https://yts.ag/api/v2/movie_details.json?movie_id=";
+    Uri downloadLocation;
+    private String moviedetailurl="https://yts.ag/api/v2/movie_details.json?movie_id=".trim();
     private RequestQueue requestQueue;
     public MovieDetails() {
     }
@@ -51,16 +57,15 @@ public class MovieDetails extends Fragment implements View.OnClickListener {
 
         // Inflate the layout for this fragment
         Bundle linkarguments=getArguments();
-        movieid=linkarguments.getString("id");
+        movieid=linkarguments.getString("id").trim();
         View v=inflater.inflate(R.layout.moviedetails, container, false);
-        requestQueue= Volley.newRequestQueue(getContext());
-        StringRequest request=new StringRequest(Request.Method.GET,moviedetailurl+movieid,onPostsLoaded,onPostsError);
-       // request.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        requestQueue.add(request);
-       // newRequestMethod();
         initComponents(v);
-        Log.e("moviedetials",""+moviedetailurl.trim()+movieid);
         clickFunctions();
+        Log.e("moviedetials",""+moviedetailurl.trim()+movieid);
+        requestQueue=Volley.newRequestQueue(getContext());
+        StringRequest request=new StringRequest(Request.Method.GET,moviedetailurl+movieid,onPostsLoaded,onPostsError);
+       // newRequestMethod();
+        requestQueue.add(request);
         return v;
     }
 
@@ -76,6 +81,7 @@ public class MovieDetails extends Fragment implements View.OnClickListener {
         tvdownloadcount= (TextView) v.findViewById(R.id.tv_detailsdownloadcount);
         tvlikecount= (TextView) v.findViewById(R.id.tv_detailslikecount);
         tvruntime= (TextView) v.findViewById(R.id.tv_detailsruntime);
+        utils=new Utils();
     }
 
     private final Response.ErrorListener onPostsError = new Response.ErrorListener() {
@@ -107,7 +113,6 @@ public class MovieDetails extends Fragment implements View.OnClickListener {
 
         }
     };
-
     private void assignData(){
         tvtest.setText(movietitle);
         tvlikecount.setText(likescount+"\t likes");
@@ -133,8 +138,11 @@ public class MovieDetails extends Fragment implements View.OnClickListener {
 
     private void downloadFile(String url){
         Uri downloadlink= Uri.parse(url);
+        utils.createDestination();
+        downloadLocation=Uri.fromFile(new File(Environment.getExternalStorageDirectory()+"/moviesupport",movietitle.trim()+"[ts].torrent"));
         downloadmgr= (DownloadManager) getContext().getSystemService(getContext().DOWNLOAD_SERVICE);
         DownloadManager.Request reqi=new DownloadManager.Request(downloadlink);
+        reqi.setDestinationUri(downloadLocation);
         reqi.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         Long reference=downloadmgr.enqueue(reqi);
         Log.d("ref",""+reference);
@@ -148,25 +156,9 @@ public class MovieDetails extends Fragment implements View.OnClickListener {
             ft.replace(R.id.activiy_main,torr);
             ft.addToBackStack(null);
             ft.commit();
-            downloadFile(torrentsurl);
+           // downloadFile(torrentsurl);
             Log.d("loging","downloading");
         }
-    }
-    private void newRequestMethod(){
-        RequestQueue queue=Volley.newRequestQueue(getContext());
-        StringRequest request=new StringRequest(Request.Method.GET,moviedetailurl+movieid,new Response.Listener<String>(){
-            @Override
-            public void onResponse(String response){
-                Log.e("response",""+response);
-            }
-        },
-                new Response.ErrorListener(){
-                    @Override
-                    public void onErrorResponse(VolleyError error){
-                        Log.d("errorcode",""+error);
-                    }
-                });
-        queue.add(request);
     }
 }
 

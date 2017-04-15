@@ -1,12 +1,12 @@
 package movies.a3dmovies.fragment;
 
 
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,7 +26,6 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
-import java.net.URISyntaxException;
 import java.security.NoSuchAlgorithmException;
 
 import movies.a3dmovies.R;
@@ -40,11 +39,10 @@ import static android.app.Activity.RESULT_OK;
 public class torrent extends Fragment implements View.OnClickListener {
 
     private String filelocation;
-    private String filetostorelocation;
+    private Uri filetostorelocation;
     TextView tvfilepath;
     Button btnpickfile;
     Utils utils;
-
     // file choose methods
     private  static final int File_select_code=0;
     public torrent() {
@@ -57,10 +55,6 @@ public class torrent extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v=inflater.inflate(R.layout.fragment_torrent, container, false);
-        File directory=new File(Environment.getExternalStorageDirectory()+"/hollywood3d");
-        if(!directory.exists()){
-            directory.mkdirs();
-        }
         initComponents(v);
         clicksOnViews();
         return v;
@@ -70,10 +64,10 @@ public class torrent extends Fragment implements View.OnClickListener {
 
     private void downloadClient(){
         try {
+            utils.createDestination();
             Client client=new Client(
                     InetAddress.getLocalHost(),
-                    SharedTorrent.fromFile(
-                            new File(filelocation),new File(Environment.getExternalStorageDirectory()+"/hollywood3d")));
+                    SharedTorrent.fromFile(new File(filelocation),new File(filetostorelocation.toString().trim()+"")));
             client.setMaxDownloadRate(50.0);
             client.setMaxUploadRate(50.0);
             client.download();
@@ -105,6 +99,7 @@ public class torrent extends Fragment implements View.OnClickListener {
         }
     }
     private void initComponents(View v){
+        filetostorelocation=Uri.fromFile(new File(Environment.getExternalStorageDirectory()+"/moviesupport"));
         btnpickfile= (Button) v.findViewById(R.id.btn_pickuptorrent);
         tvfilepath= (TextView) v.findViewById(R.id.tv_filelocationpath);
         utils=new Utils();
@@ -132,6 +127,7 @@ public class torrent extends Fragment implements View.OnClickListener {
                     Toast.LENGTH_SHORT).show();
         }
     }
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
@@ -140,40 +136,19 @@ public class torrent extends Fragment implements View.OnClickListener {
                     // Get the Uri of the selected file
                     Uri uri = data.getData();
                     Log.d("file  uri", "File Uri: "+uri.toString());
-                    String path = null;
-                    try {
-                        path = getPath(getContext(), uri);
-                        Log.d("fole path", "File Path: " + path);
-                        tvfilepath.setText(""+path);
-                        filelocation=path;
-                        downloadClient();
-                    } catch (URISyntaxException e) {
-                        e.printStackTrace();
-                    }
+                    String path=Utils.getPath(getContext(),uri);
+                    Log.d("getfilepath",""+path);
+                    tvfilepath.setText(""+path);
+                    filelocation=path;
+                    Log.d("check locations",filetostorelocation+"-file storage location "+filelocation+"file location");
+                  //  downloadClient();
+
+                    // filelocation=path;
+
+
                 }
                 break;
         }
         super.onActivityResult(requestCode, resultCode, data);
-    }
-    public static String getPath(Context context, Uri uri) throws URISyntaxException {
-        if ("content".equalsIgnoreCase(uri.getScheme())) {
-            String[] projection = { "_data" };
-            Cursor cursor = null;
-
-            try {
-                cursor = context.getContentResolver().query(uri, projection, null, null, null);
-                int column_index = cursor.getColumnIndexOrThrow("_data");
-                if (cursor.moveToFirst()) {
-                    return cursor.getString(column_index);
-                }
-            } catch (Exception e) {
-                // Eat it
-            }
-        }
-        else if ("file".equalsIgnoreCase(uri.getScheme())) {
-            return uri.getPath();
-        }
-
-        return null;
     }
 }

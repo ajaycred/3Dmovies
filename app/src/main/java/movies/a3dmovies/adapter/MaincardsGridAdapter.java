@@ -15,9 +15,9 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
+import movies.a3dmovies.R;
 import movies.a3dmovies.fragment.MovieDetails;
 import movies.a3dmovies.model.MoviesModel;
-import movies.a3dmovies.R;
 
 /**
  * Created by cred-user-6 on 6/4/17.
@@ -66,6 +66,7 @@ Context context;
             @Override
             public void onClick(View v) {
                 MovieDetails moviedetails=new MovieDetails();
+            //    DetailCheck moviedetails=new DetailCheck();
                 Bundle bundle = new Bundle();
                 bundle.putString("id"," "+moviesModel.getId());
                 moviedetails.setArguments(bundle);
