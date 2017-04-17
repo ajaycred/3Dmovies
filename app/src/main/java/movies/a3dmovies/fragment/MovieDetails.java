@@ -30,7 +30,7 @@ import org.json.JSONObject;
 import java.io.File;
 
 import movies.a3dmovies.R;
-import movies.a3dmovies.Utils;
+import movies.a3dmovies.utils.Utils;
 
 
 /**
@@ -38,7 +38,7 @@ import movies.a3dmovies.Utils;
  */
 public class MovieDetails extends Fragment implements View.OnClickListener {
     private String movieid,movietitle,torrentsurl,runtime,downloadcount,likescount;
-    TextView tvtest,tvdownloadcount,tvruntime,tvlikecount;
+    TextView tvtest,tvdownloadcount,tvruntime,tvlikecount,tvreadmore;
     Button btn_downloadlink;
     Utils utils;
     String url_background,url_icon;
@@ -81,6 +81,7 @@ public class MovieDetails extends Fragment implements View.OnClickListener {
         tvdownloadcount= (TextView) v.findViewById(R.id.tv_detailsdownloadcount);
         tvlikecount= (TextView) v.findViewById(R.id.tv_detailslikecount);
         tvruntime= (TextView) v.findViewById(R.id.tv_detailsruntime);
+        tvreadmore= (TextView) v.findViewById(R.id.details_tvreadmore);
         utils=new Utils();
     }
 

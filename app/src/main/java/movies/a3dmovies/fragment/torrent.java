@@ -16,20 +16,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.turn.ttorrent.client.Client;
-import com.turn.ttorrent.client.SharedTorrent;
-import com.turn.ttorrent.tracker.TrackedTorrent;
-import com.turn.ttorrent.tracker.Tracker;
-
 import java.io.File;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.security.NoSuchAlgorithmException;
 
 import movies.a3dmovies.R;
-import movies.a3dmovies.Utils;
+import movies.a3dmovies.utils.Utils;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -62,20 +52,12 @@ public class torrent extends Fragment implements View.OnClickListener {
 
 
 
-    private void downloadClient(){
-        try {
+   /* private void downloadClient() throws IOException, NoSuchAlgorithmException {
             utils.createDestination();
-            Client client=new Client(
-                    InetAddress.getLocalHost(),
-                    SharedTorrent.fromFile(new File(filelocation),new File(filetostorelocation.toString().trim()+"")));
+            Client client=new Client(InetAddress.getLocalHost(),SharedTorrent.fromFile(new File(filelocation),new File(filetostorelocation.toString())));
             client.setMaxDownloadRate(50.0);
             client.setMaxUploadRate(50.0);
             client.download();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
     }
     private void trackDownload(){
         Tracker tracker;
@@ -97,7 +79,7 @@ public class torrent extends Fragment implements View.OnClickListener {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-    }
+    }*/
     private void initComponents(View v){
         filetostorelocation=Uri.fromFile(new File(Environment.getExternalStorageDirectory()+"/moviesupport"));
         btnpickfile= (Button) v.findViewById(R.id.btn_pickuptorrent);
@@ -140,12 +122,8 @@ public class torrent extends Fragment implements View.OnClickListener {
                     Log.d("getfilepath",""+path);
                     tvfilepath.setText(""+path);
                     filelocation=path;
-                    Log.d("check locations",filetostorelocation+"-file storage location "+filelocation+"file location");
-                  //  downloadClient();
-
+                    Log.d("check locations",filetostorelocation+" storage location "+filelocation+"file location");
                     // filelocation=path;
-
-
                 }
                 break;
         }

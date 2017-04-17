@@ -1,6 +1,52 @@
 <resources>
     <string name="app_name">3Dmovies</string>
+    <string name="apistatus">status</string>
+    <string name="apistatus_message">status_message</string>
 
+    //data
+
+    <string name="apidata">data</string>
+    <string name="apimoviecount">movie_count</string>
+    <string name="apilimit">limit</string>
+    <string name="apipagenumber">page_number</string>
+
+    //movies
+    <string name="apimovies">movies</string>
+    <string name="apimovieid">id</string>
+    <string name="apiurl">url</string>
+    <string name="apiimdbcode">imdb_code</string>
+    <string name="apimovietitle">title</string>
+    <string name="apimovietitleenglis">title_english</string>
+    <string name="apimovietitlelong">title_long</string>
+    <string name="apislug">slug</string>
+    <string name="apimovieyear">year</string>
+    <string name="apimovierating">rating</string>
+    <string name="apimovieruntime">runtime</string>
+    <string name="apimoviegenres">genres</string>
+    <string name="apimoviesummary">summary</string>
+    <string name="apimoviedescriptionfull">description_full</string>
+    <string name="apimoviesynopsis">synopsis</string>
+    <string name="apimovieyttrailercode">yt_trailer_code</string>
+    <string name="apimovielanguage">language</string>
+    <string name="apimoviemparating">mpa_rating</string>
+    <string name="apimoviebacgroundimage">background_image</string>
+    <string name="apimoviebacgroundimageoriginal">background_image_original</string>
+    <string name="apimoviesmallcover">small_cover_image</string>
+    <string name="apimoviemediumcover">medium_cover_image</string>
+    <string name="apimovielargecover">large_cover_image</string>
+    <string name="apimoviestater">state</string>
+
+    //torrents
+    <string name="movietorrents">torrents</string>
+    <string name="torrenturl">url</string>
+    <string name="torrenthash">hash</string>
+    <string name="torrentquality">quality</string>
+    <string name="torrentseeds">seeds</string>
+    <string name="torrentpeers">peers</string>
+    <string name="torrentsize">size</string>
+    <string name="torrentsizebytes">size_bytes</string>
+    <string name="torrentdateuploaded">date_uploaded</string>
+    <string name="torrentdateuploadedunix">date_uploaded_unix</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     //resourse https://github.com/mpetazzoni/ttorrent/blob/master/cli/src/main/java/com/turn/ttorrent/cli/TrackerMain.java

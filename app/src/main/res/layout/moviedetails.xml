@@ -113,4 +113,15 @@
         android:layout_below="@+id/details_rbmovierating"
         android:text="Rating  9.5"
         android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:textColor="#fff"
+        android:gravity="center"
+        android:id="@+id/details_tvreadmore"
+        android:textSize="20dp"
+        android:layout_marginRight="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/details_rbmovierating"
+        android:text="Read more "
+        android:layout_height="wrap_content" />
 </RelativeLayout>

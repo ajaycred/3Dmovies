@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +57,7 @@ Context context;
         ImageView ivcarditem= (ImageView) convertView.findViewById(R.id.iv_carditem);
         final MoviesModel moviesModel=al.get(position);
         movierating.setText("Rating : "+moviesModel.getRating());
+        Log.d("cjeckadaptercons",""+position);
         movietitle.setText(moviesModel.getTitle());
         Glide.with(context)
                 .load(moviesModel.getImage())
