@@ -25,7 +25,14 @@
         style="?android:attr/listSeparatorTextViewStyle"
         android:layout_marginTop="20dp"
         android:textSize="20dp"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_below="@id/tv_teest"
+        android:id="@+id/details_reliconandcount"
+        android:layout_height="wrap_content">
+
     <android.support.v7.widget.CardView
+        android:layout_marginBottom="20dp"
         android:layout_width="180dp"
         app:cardElevation="15dp"
         android:layout_below="@+id/tv_teest"
@@ -39,10 +46,73 @@
             android:id="@+id/iv_icon"
             android:layout_height="match_parent" />
     </android.support.v7.widget.CardView>
+        <LinearLayout
+            android:layout_width="180dp"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:gravity="center"
+            android:id="@+id/details_lnr_leftitems"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/card_icon"
+            android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/tv_detailsruntime"
+            android:layout_alignParentLeft="true"
+            android:drawableTop="@drawable/clock"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:layout_height="match_parent"
+            android:text="1h 32m" />
+        <TextView
+            android:id="@+id/tv_detailsmparating"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:drawableTop="@drawable/movie"
+            android:layout_height="match_parent"
+            android:text=" R " />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="180dp"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:id="@+id/details_lnr_rightitems"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/card_icon"
+            android:layout_height="50dp">
+
+
+        <TextView
+            android:id="@+id/tv_detailsdownloadcount"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:drawableTop="@drawable/download"
+            android:layout_height="match_parent"
+            android:text="23015 download" />
+
+
+        <TextView
+            android:id="@+id/tv_detailslikecount"
+            android:textColor="@color/white"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:drawableTop="@drawable/thumb_up"
+            android:layout_height="match_parent"
+            android:text="1523 likes" />
+        </LinearLayout>
+    </RelativeLayout>
     <include layout="@layout/toolbardetails"></include>
 
     <Button
-        android:layout_below="@id/card_icon"
+        android:layout_below="@id/details_reliconandcount"
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
         android:id="@+id/download_torrent"
@@ -50,43 +120,7 @@
         android:layout_height="wrap_content"
         android:text="download" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_below="@+id/download_torrent"
-        android:layout_height="60dp"
-        android:gravity="center"
-        android:id="@+id/details_relruntime"
-        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_detailsruntime"
-            android:layout_alignParentLeft="true"
-            android:drawableTop="@drawable/clock"
-            android:layout_width="wrap_content"
-            android:textColor="@color/white"
-            android:layout_marginLeft="30dp"
-            android:layout_height="wrap_content"
-            android:text="1h 32m" />
-
-        <TextView
-            android:id="@+id/tv_detailsdownloadcount"
-            android:layout_width="wrap_content"
-            android:textColor="@color/white"
-            android:drawableTop="@drawable/download"
-            android:layout_centerHorizontal="true"
-            android:layout_height="wrap_content"
-            android:text="23015 download" />
-
-        <TextView
-            android:id="@+id/tv_detailslikecount"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="30dp"
-            android:textColor="@color/white"
-            android:layout_width="wrap_content"
-            android:drawableTop="@drawable/thumb_up"
-            android:layout_height="wrap_content"
-            android:text="1523 likes" />
-    </RelativeLayout>
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
@@ -97,8 +131,8 @@
         android:rating="4"
         android:numStars="5"
         android:tint="#ffeb90"
+        android:layout_below="@+id/download_torrent"
         android:background="#09cacaca"
-        android:layout_below="@+id/details_relruntime"
         android:layout_alignParentRight="true"
         style="@style/Base.Widget.AppCompat.RatingBar.Indicator"
         android:layout_width="wrap_content"
@@ -117,11 +151,11 @@
         android:layout_width="wrap_content"
         android:textColor="#fff"
         android:gravity="center"
+        android:layout_below="@+id/download_torrent"
         android:id="@+id/details_tvreadmore"
         android:textSize="20dp"
         android:layout_marginRight="30dp"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/details_rbmovierating"
         android:text="Read more "
         android:layout_height="wrap_content" />
 </RelativeLayout>

@@ -6,13 +6,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -41,10 +44,13 @@ public class MovieDetails extends Fragment implements View.OnClickListener {
     TextView tvtest,tvdownloadcount,tvruntime,tvlikecount,tvreadmore;
     Button btn_downloadlink;
     Utils utils;
+    CardView cardviewicon;
     String url_background,url_icon;
     ImageView ivbackground,ivicon;
     DownloadManager downloadmgr;
     Uri downloadLocation;
+    Animation anim_zoomout,anim_zoomin,anim_moveleft,anim_icontoleft,anim_leftitemstop;
+    LinearLayout lnrleft,lnrright;
     private String moviedetailurl="https://yts.ag/api/v2/movie_details.json?movie_id=".trim();
     private RequestQueue requestQueue;
     public MovieDetails() {
@@ -82,6 +88,14 @@ public class MovieDetails extends Fragment implements View.OnClickListener {
         tvlikecount= (TextView) v.findViewById(R.id.tv_detailslikecount);
         tvruntime= (TextView) v.findViewById(R.id.tv_detailsruntime);
         tvreadmore= (TextView) v.findViewById(R.id.details_tvreadmore);
+        cardviewicon= (CardView) v.findViewById(R.id.card_icon);
+        anim_zoomin= AnimationUtils.loadAnimation(getContext(),R.anim.moverightitemstop);
+        anim_zoomout=AnimationUtils.loadAnimation(getContext(),R.anim.zoom_out);
+        anim_moveleft=AnimationUtils.loadAnimation(getContext(),R.anim.move_right);
+        anim_icontoleft=AnimationUtils.loadAnimation(getContext(),R.anim.zoomoutandlefticon);
+        anim_leftitemstop=AnimationUtils.loadAnimation(getContext(),R.anim.moveleftitemtop);
+        lnrleft= (LinearLayout) v.findViewById(R.id.details_lnr_leftitems);
+        lnrright= (LinearLayout) v.findViewById(R.id.details_lnr_rightitems);
         utils=new Utils();
     }
 
@@ -116,9 +130,9 @@ public class MovieDetails extends Fragment implements View.OnClickListener {
     };
     private void assignData(){
         tvtest.setText(movietitle);
-        tvlikecount.setText(likescount+"\t likes");
+        tvlikecount.setText(likescount);
         tvruntime.setText(runtime+"mns");
-        tvdownloadcount.setText(downloadcount+"\t downloads");
+        tvdownloadcount.setText(downloadcount);
         Glide.with(getContext()).load(url_background).centerCrop().into(ivbackground);
         Glide.with(getContext()).load(url_icon).centerCrop().crossFade().into(ivicon);
     }
@@ -152,14 +166,21 @@ public class MovieDetails extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(v==btn_downloadlink){
+         //   animateView();
+            cardviewicon.startAnimation(anim_icontoleft);
+            lnrright.startAnimation(anim_zoomin);
+            lnrleft.startAnimation(anim_leftitemstop);
             torrent torr=new torrent();
-            FragmentTransaction ft=getFragmentManager().beginTransaction();
+       /*     FragmentTransaction ft=getFragmentManager().beginTransaction();
             ft.replace(R.id.activiy_main,torr);
             ft.addToBackStack(null);
-            ft.commit();
+            ft.commit();*/
            // downloadFile(torrentsurl);
             Log.d("loging","downloading");
         }
+    }
+    private void animateView() {
+
     }
 }
 
