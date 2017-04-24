@@ -6,7 +6,7 @@
     android:id="@+id/activiy_main"
     android:layout_height="match_parent"
     tools:context="movies.a3dmovies.activity.Main_activity">
-    <include layout="@layout/toolbar"  android:id="@+id/maintoolbar"></include>
+    <include layout="@layout/toolbar"   android:id="@+id/maintoolbar"></include>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_below="@id/maintoolbar"
@@ -20,6 +20,15 @@
         android:id="@+id/Main_grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tv_noitemspresent"
+            android:layout_marginTop="20dp"
+            android:visibility="gone"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
     </RelativeLayout>
 
 </RelativeLayout>

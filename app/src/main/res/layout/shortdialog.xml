@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="300dp"
+    android:background="@drawable/dialogbackground"
+    android:padding="10dp"
+    android:layout_height="450dp">
+<ScrollView
+    android:layout_width="wrap_content"
+   android:layout_above="@+id/btn_dialogclose"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+
+    <RadioGroup
+    android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/radiogroup_geners"
+    android:layout_height="wrap_content">
+
+    </RadioGroup>
+</RelativeLayout>
+</ScrollView>
+        <Button
+            android:id="@+id/btn_dialogclose"
+            android:textAllCaps="false"
+            android:textColor="#fff"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/btn_background"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:text="Ok" />
+
+
+</RelativeLayout>

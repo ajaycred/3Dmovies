@@ -49,5 +49,33 @@
     <string name="torrentdateuploadedunix">date_uploaded_unix</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    //resourse https://github.com/mpetazzoni/ttorrent/blob/master/cli/src/main/java/com/turn/ttorrent/cli/TrackerMain.java
+    //resourse
+    https://github.com/mpetazzoni/ttorrent/blob/master/cli/src/main/java/com/turn/ttorrent/cli/TrackerMain.java
+
+    //string geners
+    <string-array name="genersarray">
+        <item>All</item>
+        <item>Action</item>
+        <item>Adventure</item>
+        <item>Animation</item>
+        <item>Biography</item>
+        <item>Comedy</item>
+        <item>Crime</item>
+        <item>Documentary</item>
+        <item>Drama</item>
+        <item>Family</item>
+        <item>Fantasy</item>
+        <item>Film-Noir</item>
+        <item>History</item>
+        <item>Horror</item>
+        <item>Music</item>
+        <item>Musical</item>
+        <item>Mystery</item>
+        <item>Romance</item>
+        <item>Sci-Fi</item>
+        <item>Sport</item>
+        <item>Thriller</item>
+        <item>War</item>
+        <item>Western</item>
+    </string-array>
 </resources>

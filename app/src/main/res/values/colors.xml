@@ -2,7 +2,9 @@
 <resources>
     <color name="colorPrimary">#1e303d</color>
     <color name="colorPrimaryDark">#283e4e</color>
-    <color name="colorAccent">#da9c09</color>
+    <color name="colorAccent">#1e303d</color>
     <color name="white">#fff</color>
-    <color name="Mainuse">#384b59</color>
+    <color name="Mainuse">#1e303d</color>
+    <color name="Mainusetrans">#b6394c5b</color>
+
 </resources>
