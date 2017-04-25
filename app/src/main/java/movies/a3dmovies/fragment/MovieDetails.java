@@ -2,6 +2,7 @@ package movies.a3dmovies.fragment;
 
 
 import android.app.DownloadManager;
+import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -38,19 +39,22 @@ import movies.a3dmovies.utils.Utils;
  * A simple {@link Fragment} subclass.
  */
 public class MovieDetails extends Fragment implements View.OnClickListener {
-    private String movieid,movietitle,torrentsurl,runtime,downloadcount,likescount,rmprating;
+    private String movieid, movietitle, torrentsurl, runtime, downloadcount, likescount, rmprating, description,genres;
     double movierating;
-    TextView tvmovietitle,tvdownloadcount,tvruntime,tvlikecount,tvdetailsmparating;
+    TextView tvmovietitle, tvdownloadcount, tvruntime, tvlikecount, tvdetailsmparating, tvdetailsdescription,tvdetailsgeners;
     Button btn_downloadlink;
     Utils utils;
     CardView cardviewicon;
-    String url_background,url_icon;
-    ImageView ivbackground,ivicon;
+    String url_background, url_icon;
+    ImageView ivbackground, ivicon;
     DownloadManager downloadmgr;
     RatingBar rbmoviedetailsrating;
+    JSONArray arraygenres;
     Uri downloadLocation;
-    private String moviedetailurl="https://yts.ag/api/v2/movie_details.json?movie_id=".trim();
+    ProgressDialog pgshowprogress;
+    private String moviedetailurl = "https://yts.ag/api/v2/movie_details.json?movie_id=".trim();
     private RequestQueue requestQueue;
+
     public MovieDetails() {
     }
 
@@ -60,14 +64,15 @@ public class MovieDetails extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        Bundle linkarguments=getArguments();
-        movieid=linkarguments.getString("id").trim();
-        View v=inflater.inflate(R.layout.moviedetails, container, false);
+        Bundle linkarguments = getArguments();
+        movieid = linkarguments.getString("id").trim();
+        View v = inflater.inflate(R.layout.moviedetails, container, false);
         initComponents(v);
-        Log.e("moviedetials",""+moviedetailurl.trim()+movieid);
-        requestQueue=Volley.newRequestQueue(getContext());
-        StringRequest request=new StringRequest(Request.Method.GET,moviedetailurl+movieid,onPostsLoaded,onPostsError);
+        Log.e("moviedetials", "" + moviedetailurl.trim() + movieid);
+        requestQueue = Volley.newRequestQueue(getContext());
+        StringRequest request = new StringRequest(Request.Method.GET, moviedetailurl + movieid, onPostsLoaded, onPostsError);
         requestQueue.add(request);
+        showProgressdialog();
         return v;
     }
 
@@ -76,16 +81,18 @@ public class MovieDetails extends Fragment implements View.OnClickListener {
     }
 
     private void initComponents(View v) {
-        tvmovietitle= (TextView) v.findViewById(R.id.tv_movietitle);
-        ivicon= (ImageView) v.findViewById(R.id.iv_icon);
-        ivbackground= (ImageView) v.findViewById(R.id.iv_background);
-        tvdownloadcount= (TextView) v.findViewById(R.id.tv_detailsdownloadcount);
-        tvlikecount= (TextView) v.findViewById(R.id.tv_detailslikecount);
-        tvruntime= (TextView) v.findViewById(R.id.tv_detailsruntime);
-        tvdetailsmparating= (TextView) v.findViewById(R.id.tv_detailsmparating);
-        rbmoviedetailsrating= (RatingBar) v.findViewById(R.id.details_rbmovierating);
-        cardviewicon= (CardView) v.findViewById(R.id.card_icon);
-        utils=new Utils();
+        tvmovietitle = (TextView) v.findViewById(R.id.tv_movietitle);
+        ivicon = (ImageView) v.findViewById(R.id.iv_icon);
+        ivbackground = (ImageView) v.findViewById(R.id.iv_background);
+        tvdownloadcount = (TextView) v.findViewById(R.id.tv_detailsdownloadcount);
+        tvlikecount = (TextView) v.findViewById(R.id.tv_detailslikecount);
+        tvruntime = (TextView) v.findViewById(R.id.tv_detailsruntime);
+        tvdetailsmparating = (TextView) v.findViewById(R.id.tv_detailsmparating);
+          tvdetailsdescription= (TextView) v.findViewById(R.id.details_tv_description);
+        tvdetailsgeners= (TextView) v.findViewById(R.id.details_tv_geners);
+        rbmoviedetailsrating = (RatingBar) v.findViewById(R.id.details_rbmovierating);
+        cardviewicon = (CardView) v.findViewById(R.id.card_icon);
+        utils = new Utils();
     }
 
     private final Response.ErrorListener onPostsError = new Response.ErrorListener() {
@@ -93,80 +100,94 @@ public class MovieDetails extends Fragment implements View.OnClickListener {
         public void onErrorResponse(VolleyError error) {
             error.printStackTrace();
             Log.e("PostActivity", error.toString());
-            Log.e("errorcode", ""+error.networkResponse.statusCode);
+            Log.e("errorcode", "" + error.networkResponse.statusCode);
         }
     };
     private final Response.Listener<String> onPostsLoaded = new Response.Listener<String>() {
         @Override
         public void onResponse(String response) {
-            Log.e("responsemovie",""+response);
+            Log.e("responsemovie", "" + response);
             try {
-                JSONObject jsmdata=new JSONObject(response).getJSONObject("data").getJSONObject("movie");
-                movietitle=jsmdata.getString("title");
-                url_background=jsmdata.getString("background_image");
-                url_icon=jsmdata.getString("medium_cover_image");
-                downloadcount=jsmdata.getString("download_count");
-                likescount=jsmdata.getString("like_count");
-                runtime=jsmdata.getString("runtime");
-                rmprating=jsmdata.getString("mpa_rating");
-                movierating=jsmdata.getDouble("rating");
-                Log.d("getrating",""+movierating);
+                JSONObject jsmdata = new JSONObject(response).getJSONObject("data").getJSONObject("movie");
+                movietitle = jsmdata.getString("title");
+                url_background = jsmdata.getString("background_image");
+                url_icon = jsmdata.getString("medium_cover_image");
+                downloadcount = jsmdata.getString("download_count");
+                likescount = jsmdata.getString("like_count");
+                runtime = jsmdata.getString("runtime");
+                rmprating = jsmdata.getString("mpa_rating");
+                movierating = jsmdata.getDouble("rating");
+                description = jsmdata.getString("description_full");
+                arraygenres=jsmdata.getJSONArray("genres");
+                pgshowprogress.dismiss();
+                Log.d("getrating", "" + movierating);
                 gettingTorrents(jsmdata);
                 assignData();
-                Log.e("checkresponse",movietitle+"\t"+url_icon+"\t"+url_background);
+                Log.e("checkresponse", movietitle + "\t" + url_icon + "\t" + url_background);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
         }
     };
-    private void assignData(){
+
+    private void assignData() {
         tvmovietitle.setText(movietitle);
         tvlikecount.setText(likescount);
-        tvruntime.setText(runtime+"mns");
+        tvruntime.setText(runtime + "mns");
         tvdownloadcount.setText(downloadcount);
         tvdetailsmparating.setText(rmprating);
+        tvdetailsdescription.setText(description);
+        genres=new String();
+        for(int i=0;i<=arraygenres.length();i++){
+            try {
+                genres=genres+"\n"+arraygenres.get(i).toString();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        tvdetailsgeners.setText(genres.trim());
         rbmoviedetailsrating.setRating((float) movierating);
         Glide.with(getContext()).load(url_background).centerCrop().into(ivbackground);
         Glide.with(getContext()).load(url_icon).centerCrop().crossFade().into(ivicon);
     }
 
-    private void gettingTorrents(JSONObject object){
+    private void gettingTorrents(JSONObject object) {
         try {
-            JSONArray torrentsarray=object.getJSONArray("torrents");
-            JSONObject torrents3dobject= (JSONObject) torrentsarray.get(0);
-            torrentsurl=torrents3dobject.getString("url");
-            Log.e("torrentscheck",""+torrentsurl);
+            JSONArray torrentsarray = object.getJSONArray("torrents");
+            JSONObject torrents3dobject = (JSONObject) torrentsarray.get(0);
+            torrentsurl = torrents3dobject.getString("url");
+            Log.e("torrentscheck", "" + torrentsurl);
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
 
-
-
-    private void downloadFile(String url){
-        Uri downloadlink= Uri.parse(url);
+    private void downloadFile(String url) {
+        Uri downloadlink = Uri.parse(url);
         utils.createDestination();
-        downloadLocation=Uri.fromFile(new File(Environment.getExternalStorageDirectory()+"/moviesupport",movietitle.trim()+"[ts].torrent"));
-        downloadmgr= (DownloadManager) getContext().getSystemService(getContext().DOWNLOAD_SERVICE);
-        DownloadManager.Request reqi=new DownloadManager.Request(downloadlink);
+        downloadLocation = Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/moviesupport", movietitle.trim() + "[ts].torrent"));
+        downloadmgr = (DownloadManager) getContext().getSystemService(getContext().DOWNLOAD_SERVICE);
+        DownloadManager.Request reqi = new DownloadManager.Request(downloadlink);
         reqi.setDestinationUri(downloadLocation);
         reqi.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        Long reference=downloadmgr.enqueue(reqi);
-        Log.d("ref",""+reference);
+        Long reference = downloadmgr.enqueue(reqi);
+        Log.d("ref", "" + reference);
     }
 
     @Override
     public void onClick(View v) {
-        if(v==btn_downloadlink){
-            Log.d("loging","downloading");
+        if (v == btn_downloadlink) {
+            Log.d("loging", "downloading");
         }
     }
-    private void animateView() {
 
+    public void showProgressdialog(){
+        pgshowprogress=new ProgressDialog(getContext());
+        pgshowprogress.setMessage("Showing your Selection");
+        pgshowprogress.setCancelable(false);
+        pgshowprogress.show();
     }
-
-
 }
 

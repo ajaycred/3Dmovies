@@ -23,7 +23,6 @@
         android:layout_toLeftOf="@+id/iv_sort"
         android:queryHint="search for movie"
         android:layout_marginLeft="60dp"
-        android:layout_toRightOf="@+id/iv_navmenu"
         android:layout_height="match_parent" />
 
     <ImageView
