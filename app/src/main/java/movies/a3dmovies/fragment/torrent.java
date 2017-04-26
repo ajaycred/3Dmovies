@@ -51,35 +51,6 @@ public class torrent extends Fragment implements View.OnClickListener {
     }
 
 
-
-   /* private void downloadClient() throws IOException, NoSuchAlgorithmException {
-            utils.createDestination();
-            Client client=new Client(InetAddress.getLocalHost(),SharedTorrent.fromFile(new File(filelocation),new File(filetostorelocation.toString())));
-            client.setMaxDownloadRate(50.0);
-            client.setMaxUploadRate(50.0);
-            client.download();
-    }
-    private void trackDownload(){
-        Tracker tracker;
-        try {
-            tracker=new Tracker(new InetSocketAddress(6969));
-            FilenameFilter filter=new FilenameFilter() {
-                @Override
-                public boolean accept(File dir, String name) {
-                    return name.endsWith(".torrent");
-                }
-            };
-            for (File f:new File("/path/to/torrents/files").listFiles(filter)){
-                tracker.announce(TrackedTorrent.load(f));
-            }
-            tracker.start();
-            tracker.stop();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-    }*/
     private void initComponents(View v){
         filetostorelocation=Uri.fromFile(new File(Environment.getExternalStorageDirectory()+"/moviesupport"));
         btnpickfile= (Button) v.findViewById(R.id.btn_pickuptorrent);
@@ -122,6 +93,11 @@ public class torrent extends Fragment implements View.OnClickListener {
                     Log.d("getfilepath",""+path);
                     tvfilepath.setText(""+path);
                     filelocation=path;
+                 /*   try {
+                       torrentsDownload(path);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }*/
                     Log.d("check locations",filetostorelocation+" storage location "+filelocation+"file location");
                     // filelocation=path;
                 }
@@ -129,4 +105,56 @@ public class torrent extends Fragment implements View.OnClickListener {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    /*public static void torrentsDownload(String args) throws InterruptedException {
+
+        // comment this line for a real application
+       // args = new String[]{"/Users/aldenml/Downloads/Honey_Larochelle_Hijack_FrostClick_FrostWire_MP3_May_06_2016.torrent"};
+
+        File torrentFile = new File(args);
+
+        System.out.println("Using libtorrent version: " + LibTorrent.version());
+
+        final SessionManager s = new SessionManager();
+
+        final CountDownLatch signal = new CountDownLatch(1);
+
+        s.addListener(new AlertListener() {
+            @Override
+            public int[] types() {
+                return null;
+            }
+
+            @Override
+            public void alert(Alert<?> alert) {
+                AlertType type = alert.type();
+
+                switch (type) {
+                    case ADD_TORRENT:
+                        System.out.println("Torrent added");
+                        ((AddTorrentAlert) alert).handle().resume();
+                        break;
+                    case BLOCK_FINISHED:
+                        BlockFinishedAlert a = (BlockFinishedAlert) alert;
+                        int p = (int) (a.handle().status().progress() * 100);
+                        System.out.println("Progress: " + p + " for torrent name: " + a.torrentName());
+                        System.out.println(s.stats().totalDownload());
+                        break;
+                    case TORRENT_FINISHED:
+                        System.out.println("Torrent finished");
+                        signal.countDown();
+                        break;
+                }
+            }
+        });
+
+        s.start();
+
+        TorrentInfo ti = new TorrentInfo(torrentFile);
+        s.download(ti, torrentFile.getParentFile());
+
+        signal.await();
+
+        s.stop();
+    }*/
 }

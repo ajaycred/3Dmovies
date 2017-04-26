@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Mainuse"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:padding="10dp"
+        android:id="@+id/sidemenu_ivclosemenu"
+        android:src="@drawable/arrow_left" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/sidemenu_tvmenuadvsearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/magnify"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Advance Search"
+            android:textColor="#fff" />
+        <TextView
+            android:id="@+id/sidemenu_tvmenudownloads"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/download"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Downloads"
+            android:textColor="#fff" />
+        <TextView
+            android:id="@+id/sidemenu_tvmenusupportapps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/video"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Supported Apps"
+            android:textColor="#fff" />
+        <TextView
+            android:id="@+id/sidemenu_tvmenuguide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/guide"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Guide"
+            android:textColor="#fff" />
+        <TextView
+            android:id="@+id/sidemenu_tvmenufavourite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/heart"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Favourite"
+            android:textColor="#fff" />
+        <TextView
+            android:id="@+id/sidemenu_tvmenushare"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/share_variant"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Share"
+            android:textColor="#fff" />
+    </LinearLayout>
+</RelativeLayout>
