@@ -1,13 +1,91 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="movies.a3dmovies.fragment.AdvanceSearchFragment">
+    android:background="@color/Mainuse"
+    android:padding="16dp"
+    android:clickable="true"
+    tools:context="movies.a3dmovies.AdvanceSearch">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <EditText
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:drawableLeft="@drawable/magnify"
+        android:drawableTint="@color/Mainuse"
+        android:drawablePadding="5dp"
+        android:padding="5dp"
+        android:maxLines="1"
+        android:id="@+id/advancesearch_ed_entername"
+        android:inputType="textPersonName"
+        android:hint="Search For Movie"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/edsearchback"
+        android:layout_height="50dp" />
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginBottom="20dp"
+        android:weightSum="2"
+        android:id="@+id/advancesearch_lnr_spinners"
+        android:layout_below="@+id/advancesearch_ed_entername"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:weightSum="2"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Button
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:id="@+id/advancesearch_rgp_genres"
+                android:text="Genres"
+                android:textAllCaps="false"
+                android:background="#fff"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+            <Button
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="#fff"
+                android:text="Rating"
+                android:textAllCaps="false"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:weightSum="2"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="#fff"
+                android:layout_height="0dp" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="#fff"
+                android:layout_height="0dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:layout_width="120dp"
+        android:text="Search"
+        android:padding="5dp"
+        android:background="#fff"
+        android:layout_below="@+id/advancesearch_lnr_spinners"
+        android:layout_centerHorizontal="true"
+        android:textAllCaps="false"
+        android:layout_height="40dp" />
+</RelativeLayout>

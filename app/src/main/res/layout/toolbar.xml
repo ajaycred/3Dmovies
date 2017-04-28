@@ -14,16 +14,6 @@
         android:layout_height="match_parent"
         app:srcCompat="@drawable/menu" />
 
-    <SearchView
-        android:layout_width="wrap_content"
-        android:layout_margin="10dp"
-        android:focusableInTouchMode="true"
-        android:id="@+id/search_view_main"
-        android:background="@drawable/dialogbackground"
-        android:layout_toLeftOf="@+id/iv_sort"
-        android:queryHint="search for movie"
-        android:layout_marginLeft="60dp"
-        android:layout_height="match_parent" />
 
     <ImageView
         android:id="@+id/iv_sort"

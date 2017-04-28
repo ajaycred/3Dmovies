@@ -76,7 +76,6 @@ public class MovieDetails extends Fragment implements View.OnClickListener {
         movieid = linkarguments.getString("id").trim();
         View v = inflater.inflate(R.layout.moviedetails, container, false);
         initComponents(v);
-       // showTorrentScreen();
         Log.e("moviedetials", "" + moviedetailurl.trim() + movieid);
         requestQueue = Volley.newRequestQueue(getContext());
         StringRequest request = new StringRequest(Request.Method.GET, moviedetailurl + movieid, onPostsLoaded, onPostsError);

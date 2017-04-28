@@ -1,4 +1,4 @@
-package movies.a3dmovies.fragment;
+package movies.a3dmovies;
 
 
 import android.os.Bundle;
@@ -7,15 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import movies.a3dmovies.R;
-
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AdvanceSearchFragment extends Fragment {
+public class AdvanceSearch extends Fragment {
 
 
-    public AdvanceSearchFragment() {
+    public AdvanceSearch() {
         // Required empty public constructor
     }
 
