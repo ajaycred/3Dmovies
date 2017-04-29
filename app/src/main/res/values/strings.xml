@@ -78,4 +78,38 @@
         <item>War</item>
         <item>Western</item>
     </string-array>
+
+
+    //int array rating
+    <string-array  name="int_array_rating">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+    </string-array>
+    //sort by array
+    <string-array name="sortyby_array">
+        <item>All</item>
+        <item>title</item>
+        <item>year</item>
+        <item>rating</item>
+        <item>peers</item>
+        <item>seeds</item>
+        <item>download_count</item>
+        <item>like_count</item>
+        <item>date_added</item>
+    </string-array>
+    // quality array
+    <string-array name="qualtiy_array">
+        <item>All</item>
+        <item>720p</item>
+        <item>1080p</item>
+        <item>3D</item>
+    </string-array>
 </resources>

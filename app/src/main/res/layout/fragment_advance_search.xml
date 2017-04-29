@@ -41,7 +41,7 @@
             <Button
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:id="@+id/advancesearch_rgp_genres"
+                android:id="@+id/advancesearch_btn_genres"
                 android:text="Genres"
                 android:textAllCaps="false"
                 android:background="#fff"
@@ -52,6 +52,7 @@
                 android:layout_weight="1"
                 android:background="#fff"
                 android:text="Rating"
+                android:id="@+id/advancesearch_btn_rating"
                 android:textAllCaps="false"
                 android:layout_width="match_parent"
                 android:layout_height="0dp" />
@@ -63,16 +64,22 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <RadioGroup
+            <Button
                 android:layout_width="match_parent"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="#fff"
+                android:id="@+id/advancesearch_btn_quality"
+                android:text="Quality"
+                android:textAllCaps="false"
                 android:layout_height="0dp" />
 
-            <RadioGroup
+            <Button
+                android:text="Short By"
+                android:textAllCaps="false"
                 android:layout_width="match_parent"
                 android:layout_margin="5dp"
+                android:id="@+id/advancesearch_btn_shortby"
                 android:layout_weight="1"
                 android:background="#fff"
                 android:layout_height="0dp" />
@@ -83,6 +90,7 @@
         android:layout_width="120dp"
         android:text="Search"
         android:padding="5dp"
+        android:id="@+id/advancesearch_btn_search"
         android:background="#fff"
         android:layout_below="@+id/advancesearch_lnr_spinners"
         android:layout_centerHorizontal="true"

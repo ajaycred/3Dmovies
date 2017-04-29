@@ -18,16 +18,6 @@
         android:layout_below="@id/maintoolbar"
         android:layout_height="match_parent">
 
-
-   <!--     <GridView
-            android:padding="10dp"
-            android:gravity="center"
-            android:numColumns="2"
-            android:scrollbars="none"
-            android:id="@+id/Main_grid"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-            -->
     </RelativeLayout>
     </RelativeLayout>
     <android.support.design.widget.NavigationView
