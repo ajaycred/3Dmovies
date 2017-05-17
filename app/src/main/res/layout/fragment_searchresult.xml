@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="movies.a3dmovies.Searchresult">
+    tools:context="movies.a3dmovies.fragment.Searchresult">
 
     <!-- TODO: Update blank fragment layout -->
     <android.support.design.widget.FloatingActionButton

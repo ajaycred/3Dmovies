@@ -1,4 +1,4 @@
-package movies.a3dmovies;
+package movies.a3dmovies.fragment;
 
 
 import android.app.Dialog;
@@ -15,6 +15,10 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import movies.a3dmovies.R;
+import movies.a3dmovies.fragment.AdvanceSearchResultFragment;
+
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -22,11 +26,12 @@ public class AdvanceSearch extends Fragment implements View.OnClickListener {
     Button btnsoryby,btnrating,btnquality,btngenre,btnsearch;
     EditText edsearchtext;
     Dialog dialogshow;
-    Button dialogok;
+    Button dialogok,dialogclose;
     RadioGroup radioGroupgeners,radioGroupall;
-    String genreselected="",sortbyselected="",qualityselected="",ratingselected="";
+    String genreselected="",sortbyselected="",qualityselected="",ratingselected="",searchterm="";
+    Bundle bundlestringdata;
     String[] options;
-    String baseUrl="https://yts.ag/api/v2/list_movies.json?";
+    String urlapi,baseUrl="https://yts.ag/api/v2/list_movies.json?";
     public AdvanceSearch() {
         // Required empty public constructor
     }
@@ -72,18 +77,40 @@ public class AdvanceSearch extends Fragment implements View.OnClickListener {
                     @Override
                     public void onClick(View v) {
                         dialogshow.dismiss();
-                        Log.d("checkselection",""+radioGroupgeners.getCheckedRadioButtonId());
+                        Log.d("checkselection",""+radioGroupall.getCheckedRadioButtonId());
+                        Log.d("items",""+options[radioGroupall.getCheckedRadioButtonId()]);
+                        sortbyselected=""+options[radioGroupall.getCheckedRadioButtonId()].trim();
                     }
                 });
-                Log.d("showing dialog","sortyby");
                 break;
             case R.array.qualtiy_array:
-                Log.d("showing dialog","quality");
+                dialogok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialogshow.dismiss();
+                        Log.d("checkselection",""+radioGroupall.getCheckedRadioButtonId());
+                        qualityselected=""+options[radioGroupall.getCheckedRadioButtonId()].trim();
+                    }
+                });
                 break;
             case R.array.int_array_rating:
-                Log.d("showing dialog","rating");
+                dialogok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialogshow.dismiss();
+                        Log.d("checkselection",""+radioGroupall.getCheckedRadioButtonId());
+                        ratingselected=""+options[radioGroupall.getCheckedRadioButtonId()].trim();
+                    }
+                });
                 break;
         }
+        dialogclose= (Button) dialogshow.findViewById(R.id.btn_dialogclose);
+        dialogclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogshow.dismiss();
+            }
+        });
         dialogshow.show();
     }
     private void createGenersDialogGeners(int id) {
@@ -101,7 +128,22 @@ public class AdvanceSearch extends Fragment implements View.OnClickListener {
             radioGroupgeners.addView(radios);
         }
         dialogok = (Button) dialogshow.findViewById(R.id.btn_dialogok_genre);
-                Log.d("showing dialog","genersarray");
+        dialogok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogshow.dismiss();
+                Log.d("checked id",""+radioGroupgeners.getCheckedRadioButtonId());
+                genreselected=""+options[radioGroupgeners.getCheckedRadioButtonId()].trim();
+            }
+        });
+        dialogclose= (Button) dialogshow.findViewById(R.id.btn_dialogclose_genre);
+        dialogclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogshow.dismiss();
+            }
+        });
+        Log.d("showing dialog","genersarray");
         dialogshow.show();
     }
 
@@ -121,7 +163,16 @@ public class AdvanceSearch extends Fragment implements View.OnClickListener {
            createGenersDialog(R.array.qualtiy_array);
         }
         if(v==btnsearch){
-
+            searchterm=edsearchtext.getText().toString();
+            stringConcatebaseUrl(ratingselected,qualityselected,sortbyselected,genreselected,searchterm);
+            AdvanceSearchResultFragment advanceSearchResultFragment=new AdvanceSearchResultFragment();
+            bundlestringdata=new Bundle();
+            bundlestringdata.putString("querylink",""+urlapi);
+            advanceSearchResultFragment.setArguments(bundlestringdata);
+            android.support.v4.app.FragmentTransaction fragmentTransaction=getActivity().getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.replace(R.id.advancesearch_main_layout,advanceSearchResultFragment);
+            fragmentTransaction.commit();
         }
         if(v==btnsoryby){
             createGenersDialog(R.array.sortyby_array);
@@ -131,7 +182,7 @@ public class AdvanceSearch extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void stringConcatebaseUrl(String rating,String quality,String sortby,String genre){
-        String urlapi=baseUrl.trim()+"minimum_rating="+rating+"&quality="+quality+"&sort_by="+sortby+"&genre="+genre;
+    private void stringConcatebaseUrl(String rating,String quality,String sortby,String genre,String queryterm){
+        urlapi=baseUrl.trim()+"minimum_rating="+rating+"&query_term="+queryterm+"&quality="+quality+"&sort_by="+sortby+"&genre="+genre+"&limit=30&page=";
     }
 }

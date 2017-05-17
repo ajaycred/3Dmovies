@@ -1,4 +1,4 @@
-package movies.a3dmovies;
+package movies.a3dmovies.fragment;
 
 
 import android.app.ProgressDialog;
@@ -29,6 +29,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import movies.a3dmovies.R;
 import movies.a3dmovies.adapter.MaincardsGridAdapter;
 import movies.a3dmovies.model.MoviesModel;
 

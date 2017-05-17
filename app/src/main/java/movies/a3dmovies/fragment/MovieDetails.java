@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.util.Log;
@@ -19,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -33,9 +35,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import movies.a3dmovies.R;
+import movies.a3dmovies.database.DbHelper;
+import movies.a3dmovies.model.FavModel;
 import movies.a3dmovies.utils.Utils;
 
 
@@ -46,16 +51,15 @@ public class MovieDetails extends Fragment implements View.OnClickListener {
     private String movieid, movietitle, torrentsurl, runtime, downloadcount, likescount, rmprating, description,genres;
     double movierating;
     TextView tvmovietitle, tvdownloadcount, tvruntime, tvlikecount, tvdetailsmparating, tvdetailsdescription,tvdetailsgeners;
-  //  Button btndownloadone,btndownloadtwo,btndownloadthree;
-  //  Button[]  downloadbuttons={btndownloadone,btndownloadtwo,btndownloadthree};
     Utils utils;
     CardView cardviewicon;
     String url_background, url_icon;
-    ImageView ivbackground, ivicon;
+    ImageView ivbackground, ivicon,navimageback,navimagebookmark;
     DownloadManager downloadmgr;
     RatingBar rbmoviedetailsrating;
     JSONArray arraygenres,arraytorrentlinks;
     Uri downloadLocation;
+    DbHelper dbHelper;
     LayoutInflater btn_inflater;
     LinearLayout btnslayout;
     ProgressDialog pgshowprogress;
@@ -87,11 +91,16 @@ public class MovieDetails extends Fragment implements View.OnClickListener {
 
     private void clickFunctions() {
 //        btndownloadone.setOnClickListener(this);
+        navimageback.setOnClickListener(this);
+        navimagebookmark.setOnClickListener(this);
     }
 
     private void initComponents(View v) {
+        dbHelper=new DbHelper(getContext());
         tvmovietitle = (TextView) v.findViewById(R.id.tv_movietitle);
         ivicon = (ImageView) v.findViewById(R.id.iv_icon);
+        navimageback= (ImageView) v.findViewById(R.id.toolbardetials_iv_back);
+        navimagebookmark= (ImageView) v.findViewById(R.id.toolbardetials_iv_bookmark);
         ivbackground = (ImageView) v.findViewById(R.id.iv_background);
         tvdownloadcount = (TextView) v.findViewById(R.id.tv_detailsdownloadcount);
         tvlikecount = (TextView) v.findViewById(R.id.tv_detailslikecount);
@@ -163,6 +172,7 @@ public class MovieDetails extends Fragment implements View.OnClickListener {
         rbmoviedetailsrating.setRating((float) movierating);
         Glide.with(getContext()).load(url_background).centerCrop().into(ivbackground);
         Glide.with(getContext()).load(url_icon).centerCrop().crossFade().into(ivicon);
+        checkForBookmark();
     }
 
     private void gettingTorrents(JSONObject object) {
@@ -212,6 +222,15 @@ public class MovieDetails extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
       //  if(v==btndownloadone){
       //  }
+        if (v==navimageback){
+            Toast.makeText(getContext(),"justtest",Toast.LENGTH_LONG).show();
+            FragmentManager fm = getActivity().getSupportFragmentManager();
+            fm.popBackStack();
+        }
+        if(v==navimagebookmark){
+            FavModel fa=new FavModel(movieid,url_icon,movietitle);
+            dbHelper.enterDataintoFavtable(fa);
+        }
     }
 
     public void showProgressdialog(){
@@ -241,5 +260,21 @@ public class MovieDetails extends Fragment implements View.OnClickListener {
         ft.addToBackStack(null);
         ft.commit();
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+    public void checkForBookmark(){
+        ArrayList<FavModel> fdbHelper=new ArrayList<>();
+        fdbHelper=dbHelper.getBookMarks();
+        for(int i=0;i<fdbHelper.size();i++){
+            Log.e("checklogsfaf",""+fdbHelper.get(i).getMovietitle().toString());
+            if (movieid==fdbHelper.get(i).getMovieid().toString()){
+                Log.d("presemtindb","presenrt");
+            }
+        }
+    }
+
     }
 

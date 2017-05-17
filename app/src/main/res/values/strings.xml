@@ -81,7 +81,7 @@
 
 
     //int array rating
-    <string-array  name="int_array_rating">
+    <string-array name="int_array_rating">
         <item>0</item>
         <item>1</item>
         <item>2</item>

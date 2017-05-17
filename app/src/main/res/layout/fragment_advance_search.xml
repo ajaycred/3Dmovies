@@ -2,12 +2,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/advancesearch_main_layout"
     android:background="@color/Mainuse"
-    android:padding="16dp"
     android:clickable="true"
-    tools:context="movies.a3dmovies.AdvanceSearch">
+    tools:context="movies.a3dmovies.fragment.AdvanceSearch">
 
     <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:padding="16dp"
+        android:layout_height="match_parent">
     <EditText
         android:layout_width="match_parent"
         android:drawableLeft="@drawable/magnify"
@@ -96,4 +100,5 @@
         android:layout_centerHorizontal="true"
         android:textAllCaps="false"
         android:layout_height="40dp" />
+    </RelativeLayout>
 </RelativeLayout>

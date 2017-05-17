@@ -1,0 +1,33 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:layout_gravity="center"
+    tools:context="movies.a3dmovies.fragment.AdvanceSearchResultFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <GridView
+        android:layout_width="match_parent"
+        android:numColumns="2"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:gravity="center"
+        android:id="@+id/frag_advanceeserch_gv_movies"
+        android:layout_height="match_parent"
+        android:text="@string/hello_blank_fragment" />
+    <TextView
+        android:layout_width="match_parent"
+        android:padding="20dp"
+        android:textColor="@color/Mainuse"
+        android:textStyle="bold"
+        android:drawableTop="@drawable/emoticon_neutral"
+        android:layout_margin="30dp"
+        android:gravity="center"
+        android:id="@+id/searchresult_tv_noresutls_advancesearch"
+        android:layout_below="@+id/searchresult_sv_searchmovies"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        android:text="No movies found with the name please hit an another trail"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

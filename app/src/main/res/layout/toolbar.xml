@@ -13,15 +13,12 @@
         android:padding="12dp"
         android:layout_height="match_parent"
         app:srcCompat="@drawable/menu" />
-
-
-    <ImageView
-        android:id="@+id/iv_sort"
-        android:layout_width="60dp"
-        android:layout_alignParentRight="true"
-        android:layout_height="wrap_content"
-        android:padding="12dp"
+    <TextView
+        android:layout_width="wrap_content"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"
+        android:textColor="#fff"
         android:layout_centerVertical="true"
-        android:layout_gravity="center"
-        app:srcCompat="@drawable/filter" />
+        android:id="@+id/iv_navmenutitle"
+        android:layout_height="wrap_content" />
 </RelativeLayout>
